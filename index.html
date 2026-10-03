@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnovaBoard - Pizarra Digital Inteligente</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151'
+                        },
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            400: '#818cf8',
+                            accent: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter & Lucide Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.3);
+        }
+        /* Marco de fotos: si la imagen no existe, se ve el fondo con icono */
+        .photo-frame {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1f2937, #111827);
+        }
+        .photo-frame .photo-fallback {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: .5rem; color: #6b7280; font-size: .75rem;
+        }
+        .photo-frame img {
+            position: relative; z-index: 1;
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform .5s ease;
+        }
+        .photo-frame:hover img { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-100 min-h-screen selection:bg-brand-500 selection:text-white">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center glow-effect">
+                    <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-400 bg-clip-text text-transparent">InnovaBoard</span>
+                    <span class="block text-xs font-mono text-brand-400 tracking-wider">SYSTEM v2.0</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#hero" class="hover:text-brand-400 transition-colors">Inicio</a>
+                <a href="#tech" class="hover:text-brand-400 transition-colors">Tecnologías</a>
+                <a href="#architecture" class="hover:text-brand-400 transition-colors">Arquitectura</a>
+                <a href="#features" class="hover:text-brand-400 transition-colors">Características</a>
+                <a href="#gallery" class="hover:text-brand-400 transition-colors">Galería</a>
+                <a href="#conclusions" class="hover:text-brand-400 transition-colors">Conclusión</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <div class="hidden sm:flex items-center space-x-2 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-full text-xs font-mono text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Red Local</span>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg bg-dark-800 text-gray-300 hover:text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu container -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-dark-800 border-b border-gray-700">
+            <a href="#hero" class="block py-2 text-gray-300 hover:text-white">Inicio</a>
+            <a href="#tech" class="block py-2 text-gray-300 hover:text-white">Tecnologías</a>
+            <a href="#architecture" class="block py-2 text-gray-300 hover:text-white">Arquitectura</a>
+            <a href="#features" class="block py-2 text-gray-300 hover:text-white">Características</a>
+            <a href="#gallery" class="block py-2 text-gray-300 hover:text-white">Galería</a>
+            <a href="#conclusions" class="block py-2 text-gray-300 hover:text-white">Conclusión</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20 px-4">
+            <!-- Background glow gradients -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center space-x-2 bg-dark-800/80 border border-brand-500/30 px-4 py-2 rounded-full mb-8 backdrop-blur-md">
+                    <i data-lucide="wifi" class="w-4 h-4 text-brand-400"></i>
+                    <span class="text-xs sm:text-sm font-medium text-gray-300">Conectividad Segura por Red Local</span>
+                </div>
+
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                    <span class="bg-gradient-to-r from-brand-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">INNOVABOARD</span>
+                </h1>
+
+                <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    Transforma cualquier aula convencional utilizando un plumón adaptado con ultrasonido e infrarrojo, transmitiendo trazos en tiempo real por sockets locales a las laptops de los estudiantes.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#architecture" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-semibold shadow-lg shadow-brand-500/25 hover:from-brand-500 hover:to-indigo-500 transition-all flex items-center justify-center space-x-2">
+                        <span>Ver Arquitectura</span>
+                        <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#features" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-dark-800 hover:bg-dark-700 text-gray-200 font-semibold border border-gray-700 transition-all flex items-center justify-center space-x-2">
+                        <span class="text-emerald-400 font-mono">●</span>
+                        <span>Explorar Sistema</span>
+                    </a>
+                </div>
+
+                <!-- FOTO PRINCIPAL -->
+                <div class="photo-frame mt-14 rounded-2xl border border-gray-700/80 aspect-video max-w-4xl mx-auto glow-effect">
+                    <div class="photo-fallback">
+                        <i data-lucide="image" class="w-10 h-10"></i>
+                        <span>img/portada.jpg</span>
+                    </div>
+                    <img src="img/portada.jpg" alt="Prueba de InnovaBoard: plumón sobre la pizarra y trazo reflejado en la laptop" loading="lazy" onerror="this.style.display='none'">
+                </div>
+
+                <!-- Quick specs grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-12 border-t border-gray-800/80">
+                    <div class="glass-panel p-4 rounded-xl text-left">
+                        <div class="text-brand-400 font-mono text-sm mb-1">HARDWARE</div>
+                        <div class="text-white font-bold text-lg">ESP32 + Sensores</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl text-left">
+                        <div class="text-brand-400 font-mono text-sm mb-1">PROTOCOLO</div>
+                        <div class="text-white font-bold text-lg">Sockets en Red Local</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl text-left">
+                        <div class="text-brand-400 font-mono text-sm mb-1">BACKEND</div>
+                        <div class="text-white font-bold text-lg">Node.js Server</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl text-left">
+                        <div class="text-brand-400 font-mono text-sm mb-1">ASISTENCIA</div>
+                        <div class="text-white font-bold text-lg">IA "Board" Docente</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="py-24 px-4 bg-dark-800/40 border-y border-gray-800/80">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Pila Tecnológica del Proyecto</h2>
+                    <p class="text-gray-400">Combinación robusta de hardware embebido y software en tiempo real para un rendimiento óptimo en el aula.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Hardware Card -->
+                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden group hover:border-brand-500/50 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl group-hover:bg-brand-500/20 transition-all"></div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-600/20 text-brand-400 flex items-center justify-center mb-6 border border-brand-500/30">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Hardware Embebido</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Módulo <strong>esp32/strong> integrado con sensores ultrasónicos e infrarrojos en un plumón adaptado para capturar con precisión las coordenadas exactas de escritura sobre cualquier superficie plana.
+                        </p>
+                        <ul class="space-y-2 text-xs font-mono text-gray-300">
+                            <li class="flex items-center space-x-2"><span class="text-brand-400">▸</span> <span>Captura ultrasónica e IR</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-brand-400">▸</span> <span>Procesamiento en ESP32</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-brand-400">▸</span> <span>Bajo consumo energético</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Software Card -->
+                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden group hover:border-brand-500/50 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center mb-6 border border-indigo-500/30">
+                            <i data-lucide="server" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Backend & Red Local</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Servidor central en <strong>Node.js</strong> utilizando <strong>Sockets</strong> para enrutar los trazos instantáneamente a todas las laptops de los estudiantes conectados a la red local.
+                        </p>
+                        <ul class="space-y-2 text-xs font-mono text-gray-300">
+                            <li class="flex items-center space-x-2"><span class="text-indigo-400">▸</span> <span>Node.js & Express</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-indigo-400">▸</span> <span>Comunicación por Sockets</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-indigo-400">▸</span> <span>Historial de clases local</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- AI Card -->
+                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden group hover:border-brand-500/50 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center mb-6 border border-emerald-500/30">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Inteligencia Artificial</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Asistente inteligente <strong>"Board"</strong> controlado directamente por el docente para generar resúmenes automáticos, responder consultas del chat estudiantil y estructurar apuntes pedagógicos.
+                        </p>
+                        <ul class="space-y-2 text-xs font-mono text-gray-300">
+                            <li class="flex items-center space-x-2"><span class="text-emerald-400">▸</span> <span>Asistente "Board" IA</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-emerald-400">▸</span> <span>Supervisión docente</span></li>
+                            <li class="flex items-center space-x-2"><span class="text-emerald-400">▸</span> <span>Generación de contenidos</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="py-24 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Arquitectura y Flujo del Sistema</h2>
+                    <p class="text-gray-400">Visualiza cómo viaja la información desde la pizarra física hasta los dispositivos de los estudiantes en tiempo real.</p>
+                </div>
+
+                <!-- Interactive flow visualizer -->
+                <div class="glass-panel rounded-2xl p-6 md:p-10 mb-12 border border-gray-700/80">
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative">
+
+                        <!-- Step 1 -->
+                        <div onclick="showFlowInfo(1)" class="flow-step cursor-pointer group flex-1 bg-dark-800/90 hover:bg-brand-900/30 border border-gray-700 hover:border-brand-500 rounded-xl p-5 text-center transition-all w-full">
+                            <div class="w-10 h-10 rounded-full bg-brand-600/30 text-brand-400 font-mono font-bold flex items-center justify-center mx-auto mb-3 border border-brand-500/40 group-hover:scale-110 transition-transform">01</div>
+                            <h4 class="font-bold text-white text-sm mb-1">Captura Física</h4>
+                            <p class="text-xs text-gray-400">Docente escribe con el plumón con ultrasonido/IR.</p>
+                        </div>
+
+                        <div class="hidden lg:block text-gray-600">
+                            <i data-lucide="arrow-right" class="w-6 h-6 animate-pulse"></i>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div onclick="showFlowInfo(2)" class="flow-step cursor-pointer group flex-1 bg-dark-800/90 hover:bg-brand-900/30 border border-gray-700 hover:border-brand-500 rounded-xl p-5 text-center transition-all w-full">
+                            <div class="w-10 h-10 rounded-full bg-indigo-600/30 text-indigo-400 font-mono font-bold flex items-center justify-center mx-auto mb-3 border border-indigo-500/40 group-hover:scale-110 transition-transform">02</div>
+                            <h4 class="font-bold text-white text-sm mb-1">Procesamiento ESP32</h4>
+                            <p class="text-xs text-gray-400">El ESP32 empaqueta y transmite la señal vía red local.</p>
+                        </div>
+
+                        <div class="hidden lg:block text-gray-600">
+                            <i data-lucide="arrow-right" class="w-6 h-6 animate-pulse"></i>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div onclick="showFlowInfo(3)" class="flow-step cursor-pointer group flex-1 bg-dark-800/90 hover:bg-brand-900/30 border border-gray-700 hover:border-brand-500 rounded-xl p-5 text-center transition-all w-full">
+                            <div class="w-10 h-10 rounded-full bg-emerald-600/30 text-emerald-400 font-mono font-bold flex items-center justify-center mx-auto mb-3 border border-emerald-500/40 group-hover:scale-110 transition-transform">03</div>
+                            <h4 class="font-bold text-white text-sm mb-1">Servidor Node.js</h4>
+                            <p class="text-xs text-gray-400">Distribución por Sockets a clientes y gestión de IA.</p>
+                        </div>
+
+                        <div class="hidden lg:block text-gray-600">
+                            <i data-lucide="arrow-right" class="w-6 h-6 animate-pulse"></i>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div onclick="showFlowInfo(4)" class="flow-step cursor-pointer group flex-1 bg-dark-800/90 hover:bg-brand-900/30 border border-gray-700 hover:border-brand-500 rounded-xl p-5 text-center transition-all w-full">
+                            <div class="w-10 h-10 rounded-full bg-purple-600/30 text-purple-400 font-mono font-bold flex items-center justify-center mx-auto mb-3 border border-purple-500/40 group-hover:scale-110 transition-transform">04</div>
+                            <h4 class="font-bold text-white text-sm mb-1">Laptops de Alumnos</h4>
+                            <p class="text-xs text-gray-400">Visualización en tiempo real, chat e historial activo.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Flow dynamic description box -->
+                    <div id="flow-details" class="mt-8 p-4 rounded-xl bg-dark-900/85 border border-brand-500/30 text-sm text-gray-300 font-mono flex items-start space-x-3">
+                        <i data-lucide="info" class="w-5 h-5 text-brand-400 shrink-0 mt-0.5"></i>
+                        <div>
+                            <span class="text-brand-400 font-bold block mb-1" id="flow-title">Haz clic en cualquier etapa superior para ver detalles</span>
+                            <span id="flow-desc" class="text-gray-400">El sistema procesa la escritura de manera local para garantizar velocidad y estabilidad educativa.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-24 px-4 bg-dark-800/40 border-y border-gray-800/80">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Características Principales</h2>
+                    <p class="text-gray-400">Diseñado específicamente para optimizar la interacción pedagógica moderna en cualquier entorno.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="edit-3" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Trazos en Tiempo Real</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Digitalización instantánea de cada palabra y diagrama trazado en la pizarra tradicional reflejado en las pantallas estudiantiles.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Chat Estudiantil</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Espacio de participación colaborativa por texto donde los estudiantes pueden interactuar y realizar preguntas ordenadas.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                            <i data-lucide="history" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Historial de Clases</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Almacenamiento automático y estructurado de todas las sesiones pasadas para repaso posterior por parte de los alumnos.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
+                            <i data-lucide="bot" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Asistente IA "Board"</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Inteligencia artificial supervisada por el docente que asiste en la explicación de conceptos y generación de apuntes clave.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GALERÍA DE FOTOS ================= -->
+        <section id="gallery" class="py-24 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Galería del Proyecto</h2>
+                    <p class="text-gray-400">El prototipo real de InnovaBoard: sensores, electrónica y montaje de la pizarra.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+                    <figure class="glass-panel rounded-2xl overflow-hidden col-span-1 md:col-span-2">
+                        <div class="photo-frame aspect-[4/3]">
+                            <div class="photo-fallback"><i data-lucide="image" class="w-8 h-8"></i><span>img/pizarra-frente.jpg</span></div>
+                            <img src="img/pizarra-frente.jpg" alt="Pizarra con sensores ultrasónicos en las cuatro esquinas" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                        <figcaption class="p-4">
+                            <h3 class="text-white font-bold text-sm mb-1">Pizarra con sensores ultrasónicos</h3>
+                            <p class="text-gray-400 text-xs">Sensores colocados en las esquinas de la pizarra.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="glass-panel rounded-2xl overflow-hidden col-span-1 md:col-span-2">
+                        <div class="photo-frame aspect-[4/3]">
+                            <div class="photo-fallback"><i data-lucide="image" class="w-8 h-8"></i><span>img/esp32.jpg</span></div>
+                            <img src="img/esp32.jpg" alt="Módulo ESP32 con circuito y sensor ultrasónico" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                        <figcaption class="p-4">
+                            <h3 class="text-white font-bold text-sm mb-1">Módulo ESP32 y sensor</h3>
+                            <p class="text-gray-400 text-xs">Microcontrolador, circuito de apoyo y sensor ultrasónico.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="glass-panel rounded-2xl overflow-hidden col-span-1 md:col-span-2">
+                        <div class="photo-frame aspect-[4/3]">
+                            <div class="photo-fallback"><i data-lucide="image" class="w-8 h-8"></i><span>img/placa.jpg</span></div>
+                            <img src="img/placa.jpg" alt="Placa electrónica compacta con componentes soldados" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                        <figcaption class="p-4">
+                            <h3 class="text-white font-bold text-sm mb-1">Placa electrónica</h3>
+                            <p class="text-gray-400 text-xs">Circuito compacto armado a mano.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="glass-panel rounded-2xl overflow-hidden col-span-1 md:col-span-3">
+                        <div class="photo-frame aspect-[4/3]">
+                            <div class="photo-fallback"><i data-lucide="image" class="w-8 h-8"></i><span>img/pizarra-atras-1.jpg</span></div>
+                            <img src="img/pizarra-atras-1.jpg" alt="Parte trasera de la pizarra con circuitos y cableado" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                        <figcaption class="p-4">
+                            <h3 class="text-white font-bold text-sm mb-1">Parte trasera: circuitos</h3>
+                            <p class="text-gray-400 text-xs">Circuitos de recepción y cableado detrás de la pizarra.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="glass-panel rounded-2xl overflow-hidden col-span-1 md:col-span-3">
+                        <div class="photo-frame aspect-[4/3]">
+                            <div class="photo-fallback"><i data-lucide="image" class="w-8 h-8"></i><span>img/pizarra-atras-2.jpg</span></div>
+                            <img src="img/pizarra-atras-2.jpg" alt="Pizarra montada en un caballete con circuitos y cables" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                        <figcaption class="p-4">
+                            <h3 class="text-white font-bold text-sm mb-1">Montaje en caballete</h3>
+                            <p class="text-gray-400 text-xs">Pizarra sobre caballete con el ESP32 conectado.</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusions" class="py-24 px-4 bg-dark-800/40 border-t border-gray-800/80">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Conclusión del Proyecto</h2>
+                    <p class="text-gray-400">Resumen ejecutivo e impacto de la solución tecnológica InnovaBoard.</p>
+                </div>
+
+                <div class="glass-panel p-8 md:p-12 rounded-3xl border border-brand-500/30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 text-brand-400">
+                        <i data-lucide="award" class="w-32 h-32"></i>
+                    </div>
+
+                    <div class="space-y-6 relative z-10">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-1 font-mono text-xs">✓</div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">Viabilidad y Accesibilidad Económica</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    InnovaBoard demuestra la viabilidad de digitalizar pizarras tradicionales mediante hardware de bajo costo (ESP32 y sensores ultrasónicos/infrarrojos), evitando costosas pantallas interactivas comerciales.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-1 font-mono text-xs">✓</div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">Conectividad Local Estable</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    Gracias al uso de Sockets en red local, el sistema opera de manera fluida y estable dentro del aula, con baja latencia en la transmisión de los trazos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-1 font-mono text-xs">✓</div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-1">Modernización Pedagógica Integral</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    El proyecto enriquece el proceso de enseñanza combinando la captura tradicional de trazos con herramientas interactivas avanzadas como chat estudiantil, historial y el asistente IA docente.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-900 border-t border-gray-800 py-12 px-4 text-center text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-gray-300">InnovaBoard Project</span>
+                <span>— Sistema de Pizarra Digital Interactiva</span>
+            </div>
+            <div class="font-mono text-gray-400">
+                Desplegado en Red Local
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón del recorrido automático -->
+    <button id="tour-btn" type="button" aria-label="Pausar recorrido automático"
+        class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold shadow-lg shadow-brand-500/30 transition-all">
+    </button>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar el menú móvil al elegir una sección
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Flow interactive details selector
+        function showFlowInfo(step) {
+            const titleEl = document.getElementById('flow-title');
+            const descEl = document.getElementById('flow-desc');
+
+            const flowData = {
+                1: {
+                    title: "Paso 01: Captura Física con Plumón Adaptado",
+                    desc: "El docente utiliza un plumón convencional equipado con un emisor de ultrasonido e infrarrojo. Al escribir sobre la pizarra, los sensores perimetrales capturan la posición exacta y el movimiento."
+                },
+                2: {
+                    title: "Paso 02: Procesamiento y Transmisión local vía ESP32",
+                    desc: "El microcontrolador ESP32 procesa las señales recibidas de los sensores, calcula las coordenadas cartesianas de los trazos y las empaqueta para su transmisión instantánea."
+                },
+                3: {
+                    title: "Paso 03: Servidor Central Node.js y Sockets",
+                    desc: "Un servidor Node.js corriendo localmente recibe la información y utiliza WebSockets para difundir los trazos en tiempo real a todas las computadoras conectadas a la red Wi-Fi local."
+                },
+                4: {
+                    title: "Paso 04: Visualización Interactiva en Laptops de Alumnos",
+                    desc: "Los estudiantes visualizan la pizarra en vivo desde su navegador web, además de interactuar mediante el chat de clase, consultar el historial de apuntes y activar al asistente IA 'Board'."
+                }
+            };
+
+            if (flowData[step]) {
+                titleEl.textContent = flowData[step].title;
+                descEl.textContent = flowData[step].desc;
+            }
+        }
+
+        // Set default active flow info
+        window.addEventListener('DOMContentLoaded', () => {
+            showFlowInfo(1);
+        });
+
+        // ===== Recorrido automático por las secciones =====
+        const TOUR_SECTIONS = ['hero', 'tech', 'architecture', 'features', 'gallery', 'conclusions'];
+        const TOUR_DELAY = 8000;   // tiempo en cada sección (8 segundos)
+        const TOUR_IDLE = 15000;   // si el usuario toca algo, se reanuda tras 15 s sin actividad
+
+        const tourBtn = document.getElementById('tour-btn');
+        let tourOn = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let tourTimer = null;
+        let tourIdleTimer = null;
+
+        function tourButtonUI() {
+            tourBtn.innerHTML = tourOn
+                ? '<i data-lucide="pause" class="w-4 h-4"></i><span>Pausar recorrido</span>'
+                : '<i data-lucide="play" class="w-4 h-4"></i><span>Recorrido automático</span>';
+            tourBtn.setAttribute('aria-label', tourOn ? 'Pausar recorrido automático' : 'Iniciar recorrido automático');
+            lucide.createIcons();
+        }
+
+        // Sección que se está viendo ahora
+        function currentSectionIndex() {
+            const y = window.scrollY + 120;
+            let idx = 0;
+            TOUR_SECTIONS.forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= y) idx = i;
+            });
+            return idx;
+        }
+
+        function goToSection(i) {
+            const el = document.getElementById(TOUR_SECTIONS[i]);
+            if (!el) return;
+            const top = el.getBoundingClientRect().top + window.scrollY - 80; // 80 = alto del menú fijo
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+
+        function tourStep() {
+            const next = (currentSectionIndex() + 1) % TOUR_SECTIONS.length;
+            goToSection(next);
+        }
+
+        function tourStart() {
+            clearInterval(tourTimer);
+            tourTimer = setInterval(tourStep, TOUR_DELAY);
+        }
+
+        function tourStop() {
+            clearInterval(tourTimer);
+            clearTimeout(tourIdleTimer);
+        }
+
+        // Botón: activa o desactiva el recorrido
+        tourBtn.addEventListener('click', () => {
+            tourOn = !tourOn;
+            tourOn ? tourStart() : tourStop();
+            tourButtonUI();
+        });
+
+        // Si el usuario interactúa, se pausa y se reanuda solo tras un rato sin actividad
+        ['wheel', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                if (e.target.closest && e.target.closest('#tour-btn')) return;
+                if (!tourOn) return;
+                clearInterval(tourTimer);
+                clearTimeout(tourIdleTimer);
+                tourIdleTimer = setTimeout(tourStart, TOUR_IDLE);
+            }, { passive: true });
+        });
+
+        // Arranque
+        tourButtonUI();
+        if (tourOn) tourStart();
+    </script>
+</body>
+</html>
