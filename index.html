@@ -1,101 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InnovaBoard · Ciencias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="aprender.css">
+</head>
+<body>
+<div class="background-science" aria-hidden="true"><span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span><span class="particle p4"></span><span class="particle p5"></span><span class="particle p6"></span></div>
 
-<script>
-"use strict";
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="mobile-menu" id="mobile-menu"><i class="fa-solid fa-bars"></i></button>
+    <a href="#" class="brand" id="brand-home"><span class="brand-icon"><i class="fa-solid fa-flask"></i></span><span><b>Innova</b><strong>Board</strong><small>INNOVANDO EL APRENDIZAJE</small></span></a>
+    <nav class="topnav" aria-label="Navegación principal">
+      <button class="nav-link active" data-view="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+      <button class="nav-link" data-view="explorar"><i class="fa-solid fa-compass"></i> Explorar</button>
+      <button class="nav-link" data-view="progreso"><i class="fa-solid fa-chart-simple"></i> Progreso</button>
+    </nav>
+    <div class="account-area">
+      <button class="profile-button" id="btn-open-profile" type="button"><span class="profile-avatar" id="nav-profile-avatar">B</span><span class="profile-name" id="nav-profile-name">Iniciar sesión</span><i class="fa-solid fa-chevron-down"></i></button>
+    </div>
+  </div>
+</header>
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Menú móvil
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
+<aside class="mobile-sidebar" id="mobile-sidebar">
+  <button class="mobile-side-link active" data-view="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+  <button class="mobile-side-link" data-view="explorar"><i class="fa-solid fa-compass"></i> Explorar ciencias</button>
+  <button class="mobile-side-link" data-view="progreso"><i class="fa-solid fa-chart-line"></i> Mi progreso</button>
+</aside>
 
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener("click", function () {
-            mobileMenu.classList.toggle("hidden");
-        });
+<main>
+<section class="view view-home" id="vista-inicio">
+  <div class="home-hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><i class="fa-solid fa-leaf"></i> INNOVABOARD · CIENCIAS</span>
+      <h1>La ciencia no se memoriza.<br><em>Se descubre.</em></h1>
+      <p>Aprende con ideas claras, ejemplos visuales y pequeñas misiones que convierten cada tema en una experiencia.</p>
+      <div class="hero-actions"><button class="btn-primary" id="hero-explore"><i class="fa-solid fa-rocket"></i> Empezar a explorar</button><button class="btn-ghost" id="hero-progress"><i class="fa-solid fa-chart-line"></i> Ver mi progreso</button></div>
+      <div class="home-stats"><div><strong id="home-progress">0%</strong><span>avance total</span></div><div><strong id="home-completed">0</strong><span>lecciones completadas</span></div><div><strong>4</strong><span>áreas científicas</span></div></div>
+    </div>
+    <div class="hero-lab" aria-label="Ilustración de laboratorio">
+      <div class="lab-orbit orbit-a"></div><div class="lab-orbit orbit-b"></div><div class="lab-core"><i class="fa-solid fa-atom"></i></div>
+      <div class="hero-chip chip-bio"><i class="fa-solid fa-dna"></i><span>Vida</span></div>
+      <div class="hero-chip chip-chem"><i class="fa-solid fa-flask-vial"></i><span>Materia</span></div>
+      <div class="hero-chip chip-fis"><i class="fa-solid fa-bolt"></i><span>Energía</span></div>
+      <div class="hero-chip chip-earth"><i class="fa-solid fa-earth-americas"></i><span>Planeta</span></div>
+    </div>
+  </div>
 
-        mobileMenu.querySelectorAll("a").forEach(function (link) {
-            link.addEventListener("click", function () {
-                mobileMenu.classList.add("hidden");
-            });
-        });
-    }
+  <section class="characters-section">
+    <div class="section-heading compact"><div><span>CONOCE AL EQUIPO</span><h2>Tu laboratorio tiene compañía</h2></div><p>Cada personaje te guía en un área distinta.</p></div>
+    <div class="character-grid">
+      <article class="character-card char-bio"><div class="character"><div class="hair"></div><div class="face">🧑🏽‍🔬</div></div><div class="speech"><span>SOY BIO</span><h3>¡Vamos a descubrir la vida!</h3><p>Te acompaño en <b>Biología</b>: células, ecosistemas y cuerpo humano.</p><button class="character-go" data-materia="biologia">Ir a Biología <i class="fa-solid fa-arrow-right"></i></button></div></article>
+      <article class="character-card char-chem"><div class="character"><div class="face">👩🏻‍🔬</div></div><div class="speech"><span>SOY QUIMI</span><h3>¡Mezclemos ideas!</h3><p>Te ayudo con <b>Química</b>: materia, átomos y cambios.</p><button class="character-go" data-materia="quimica">Ir a Química <i class="fa-solid fa-arrow-right"></i></button></div></article>
+      <article class="character-card char-fis"><div class="character"><div class="face">🧑🏽‍🏫</div></div><div class="speech"><span>SOY FIS</span><h3>¡Todo tiene una explicación!</h3><p>Te acompaño en <b>Física</b>: movimiento, fuerzas y energía.</p><button class="character-go" data-materia="fisica">Ir a Física <i class="fa-solid fa-arrow-right"></i></button></div></article>
+      <article class="character-card char-earth"><div class="character"><div class="face">👩🏽‍🚀</div></div><div class="speech"><span>SOY TERRA</span><h3>¡Miremos nuestro planeta!</h3><p>Te ayudo con <b>Ciencias de la Tierra</b>: planeta, fenómenos y ambiente.</p><button class="character-go" data-materia="tierra">Ir a Tierra <i class="fa-solid fa-arrow-right"></i></button></div></article>
+    </div>
+  </section>
 
-    // Vista previa de imágenes
-    document.querySelectorAll("[data-slot]").forEach(function (slot) {
-        const input = slot.querySelector('input[type="file"]');
+  <section class="quick-section"><div class="section-heading compact"><div><span>RUTA RÁPIDA</span><h2>¿Qué quieres hacer hoy?</h2></div></div><div class="quick-grid"><button class="quick-card" data-view="explorar"><i class="fa-solid fa-compass"></i><span><b>Elegir un tema</b><small>Explora las cuatro áreas</small></span><i class="fa-solid fa-arrow-right arrow"></i></button><button class="quick-card" id="quick-last"><i class="fa-solid fa-bookmark"></i><span><b>Continuar aprendiendo</b><small>Retoma tu última lección</small></span><i class="fa-solid fa-arrow-right arrow"></i></button><button class="quick-card" data-view="progreso"><i class="fa-solid fa-trophy"></i><span><b>Ver mi avance</b><small>Observa cuánto has descubierto</small></span><i class="fa-solid fa-arrow-right arrow"></i></button></div></section>
+</section>
 
-        if (!input) return;
+<section class="view" id="vista-explorar" hidden>
+  <div class="page-head"><button class="back-link" id="explore-back"><i class="fa-solid fa-arrow-left"></i> Inicio</button><span class="eyebrow"><i class="fa-solid fa-microscope"></i> LABORATORIO DE CIENCIAS</span><h1>Elige un área para comenzar</h1><p>No tienes que aprender todo de una vez. Elige una ruta y avanza a tu ritmo.</p></div>
+  <div class="subject-grid">
+    <article class="subject-card biology" data-materia="biologia"><div class="subject-icon"><i class="fa-solid fa-dna"></i></div><div class="subject-copy"><span>01 · VIDA</span><h2>Biología</h2><p>Descubre cómo funciona la vida desde la célula hasta los ecosistemas.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="biologia">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="biologia">0%</div><div class="mini-track"><span></span></div></div></article>
+    <article class="subject-card chemistry" data-materia="quimica"><div class="subject-icon"><i class="fa-solid fa-flask-vial"></i></div><div class="subject-copy"><span>02 · MATERIA</span><h2>Química</h2><p>Entiende los materiales, los átomos y los cambios que ocurren a tu alrededor.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="quimica">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="quimica">0%</div><div class="mini-track"><span></span></div></div></article>
+    <article class="subject-card physics" data-materia="fisica"><div class="subject-icon"><i class="fa-solid fa-bolt"></i></div><div class="subject-copy"><span>03 · ENERGÍA</span><h2>Física</h2><p>Explica el movimiento, las fuerzas y la energía presentes en nuestro mundo.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="fisica">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="fisica">0%</div><div class="mini-track"><span></span></div></div></article>
+    <article class="subject-card earth" data-materia="tierra"><div class="subject-icon"><i class="fa-solid fa-earth-americas"></i></div><div class="subject-copy"><span>04 · PLANETA</span><h2>Ciencias de la Tierra</h2><p>Conoce nuestro planeta, sus fenómenos y cómo podemos cuidarlo.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="tierra">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="tierra">0%</div><div class="mini-track"><span></span></div></div></article>
+  </div>
+</section>
 
-        slot.addEventListener("click", function (event) {
-            if (event.target === input) return;
-            input.click();
-        });
+<section class="view" id="vista-lecciones" hidden>
+  <button class="back-link" id="btn-volver-materias"><i class="fa-solid fa-arrow-left"></i> Volver a áreas</button>
+  <div class="lesson-list-head"><div class="active-subject-icon" id="materia-activa-icono"></div><div><span class="eyebrow">RUTA DE APRENDIZAJE</span><h1 id="materia-activa-nombre">Biología</h1><p id="materia-activa-desc"></p></div></div>
+  <div class="area-guide" id="area-guide">
+    <div class="guide-character" id="area-guide-character">🧑🏽‍🔬</div>
+    <div class="guide-bubble">
+      <span class="guide-name" id="area-guide-name">BIO</span>
+      <h2 id="area-guide-title">¡Bienvenido a tu laboratorio!</h2>
+      <p id="area-guide-message">Aquí encontrarás tus lecciones. Elige una para comenzar a descubrir.</p>
+    </div>
+  </div>
+  <div class="area-progress"><div><span>Progreso del área</span><b id="progreso-materia-porcentaje">0%</b></div><div class="area-track"><span id="progreso-materia-fill"></span></div></div>
+  <div class="lesson-grid" id="lecciones-lista"></div>
+</section>
 
-        input.addEventListener("change", function () {
-            const file = input.files && input.files[0];
+<section class="view" id="vista-contenido" hidden>
+  <button class="back-link" id="btn-volver-lecciones"><i class="fa-solid fa-arrow-left"></i> Volver a las lecciones</button>
+  <div class="reading-line"><span id="lectura-progreso-fill"></span></div>
+  <article class="lesson-content" id="contenido-leccion"></article>
+</section>
 
-            if (!file || !file.type.startsWith("image/")) return;
+<section class="view" id="vista-progreso-global" hidden>
+  <div class="page-head"><span class="eyebrow"><i class="fa-solid fa-chart-line"></i> MI PROGRESO</span><h1>Todo lo que ya descubriste</h1><p>Tu avance se guarda en este navegador para que puedas volver cuando quieras.</p></div>
+  <div class="global-progress-card"><div class="global-number"><strong id="resumen-porcentaje">0%</strong><span id="resumen-detalle">0 de 12 lecciones</span></div><div class="global-bar"><span id="progreso-global-fill"></span></div></div>
+  <div class="progress-subjects" id="progreso-global-materias"></div>
+  <button class="reset-progress" id="btn-reset-progreso"><i class="fa-solid fa-rotate-left"></i> Reiniciar progreso</button>
+</section>
+</main>
 
-            let img = slot.querySelector("img");
+<!-- LOGIN -->
+<div class="account-modal" id="login-modal" aria-hidden="true"><div class="account-backdrop" data-close-account></div><div class="account-card"><button class="account-close" data-close-account><i class="fa-solid fa-xmark"></i></button><div class="account-symbol"><i class="fa-solid fa-flask"></i></div><span class="eyebrow">INNOVABOARD</span><h2>Entra a tu laboratorio</h2><p>Guarda tu progreso y vuelve a tus lecciones cuando quieras.</p><form id="login-form"><label>Nombre<input id="login-name" required placeholder="Ej. Bryan"></label><label>Correo electrónico<input id="login-email" type="email" required placeholder="tucorreo@ejemplo.com"></label><label>Grupo <span class="optional">opcional</span><input id="login-group" placeholder="Ej. BTV Desarrollo de Software"></label><button class="btn-primary full" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button></form><small class="local-note"><i class="fa-solid fa-lock"></i> Esta versión guarda el perfil solo en este navegador.</small></div></div>
 
-            if (!img) {
-                img = document.createElement("img");
-                img.alt = "Vista previa de la imagen seleccionada";
-                slot.appendChild(img);
-            }
+<!-- PERFIL -->
+<div class="account-modal" id="profile-modal" aria-hidden="true"><div class="account-backdrop" data-close-account></div><div class="account-card"><button class="account-close" data-close-account><i class="fa-solid fa-xmark"></i></button><div class="profile-head"><div class="profile-big-avatar" id="profile-big-avatar">B</div><div><span class="eyebrow">MI PERFIL</span><h2 id="profile-title">Tu espacio</h2><p id="profile-welcome"></p></div></div><div class="profile-grid"><div><span>Nombre</span><b id="profile-name">—</b></div><div><span>Correo</span><b id="profile-email">—</b></div><div><span>Grupo</span><b id="profile-group">—</b></div><div><span>Lecciones</span><b id="profile-lessons">0</b></div></div><div class="profile-actions"><button class="btn-primary" id="profile-close-btn">Seguir aprendiendo</button><button class="btn-danger" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button></div></div></div>
 
-            if (img.dataset.objectUrl) {
-                URL.revokeObjectURL(img.dataset.objectUrl);
-            }
-
-            const objectUrl = URL.createObjectURL(file);
-            img.src = objectUrl;
-            img.dataset.objectUrl = objectUrl;
-
-            const placeholder = slot.querySelector(".slot-placeholder");
-
-            if (placeholder) {
-                placeholder.style.display = "none";
-            }
-        });
-    });
-
-    // Información interactiva de la arquitectura
-    const flowData = {
-        1: {
-            title: "Paso 01: Captura física",
-            desc: "El docente escribe con el plumón adaptado y los sensores capturan la señal."
-        },
-        2: {
-            title: "Paso 02: Procesamiento ESP32",
-            desc: "El microcontrolador procesa los datos de los sensores y prepara la información."
-        },
-        3: {
-            title: "Paso 03: Servidor Node.js",
-            desc: "El servidor local distribuye los trazos a los dispositivos conectados."
-        },
-        4: {
-            title: "Paso 04: Pantallas de los estudiantes",
-            desc: "Los estudiantes consultan la pizarra digital desde sus navegadores."
-        }
-    };
-
-    function showFlowInfo(step) {
-        const title = document.getElementById("flow-title");
-        const desc = document.getElementById("flow-desc");
-        const info = flowData[step];
-
-        if (!title || !desc || !info) return;
-
-        title.textContent = info.title;
-        desc.textContent = info.desc;
-    }
-
-    document.querySelectorAll(".flow-step").forEach(function (step, index) {
-        step.addEventListener("click", function () {
-            showFlowInfo(index + 1);
-        });
-    });
-
-    showFlowInfo(1);
-});
-</script>
+<div class="toast-container" id="toast-container"></div>
+<script src="aprender.js"></script>
+</body></html>
