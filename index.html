@@ -1,115 +1,592 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>InnovaBoard · Ciencias</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="aprender.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="description" content="InnovaBoard: una propuesta educativa para conservar y compartir lo escrito en la pizarra.">
+  <title>InnovaBoard | Proyecto educativo</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0F172A;
+      --surface: #1E293B;
+      --ink: #E8EDF5;
+      --muted: #A3B1C6;
+      --line: #334155;
+      --blue: #3B5BDB;
+      --accent: #8FA8FF;
+      --red: #F0605A;
+      --soft: #26345A;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      padding: 14px 24px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    header,
+    section,
+    footer {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+
+    /* Título principal: INNOVABOARD en grande */
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(30px, 10.5vw, 112px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 5vw, 38px);
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    p {
+      max-width: 65ch;
+      margin: 0 0 16px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: clamp(20px, 3vw, 25px);
+    }
+
+    .stroke {
+      display: block;
+      width: min(420px, 90%);
+      height: 24px;
+      margin-bottom: 24px;
+    }
+
+    .stroke path {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 420;
+      stroke-dashoffset: 0;
+    }
+
+    .img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      margin: 24px 0;
+      padding: 24px;
+      border: 2px dashed var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Presentación: 7 espacios para imágenes */
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      overflow: hidden;
+      border: 2px dashed var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* Cualquier <img> que pongas dentro de un espacio se ajusta sola */
+    .slot img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slot-1 { grid-column: span 2; grid-row: span 2; }
+    .slot-6,
+    .slot-7 { grid-column: span 2; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(min(100%, 220px), 1fr)
+      );
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    .flow span {
+      padding: 9px 15px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .flow i {
+      color: var(--muted);
+      font-style: normal;
+    }
+
+    .todo {
+      border-left: 6px solid var(--red);
+    }
+
+    .ok {
+      border-left: 6px solid var(--blue);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    #auto {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 20;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--blue);
+      color: white;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 12px #00000020;
+    }
+
+    #auto:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 800px) {
+      .galeria {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .slot-1 { grid-row: span 1; }
+    }
+
+    @media (max-width: 480px) {
+      header,
+      section {
+        padding: 40px 18px;
+      }
+
+      nav {
+        padding: 12px 18px;
+      }
+
+      .flow i {
+        display: none;
+      }
+
+      .galeria {
+        grid-template-columns: 1fr;
+      }
+
+      .slot-1,
+      .slot-6,
+      .slot-7 { grid-column: span 1; }
+
+      #auto {
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="background-science" aria-hidden="true"><span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span><span class="particle p4"></span><span class="particle p5"></span><span class="particle p6"></span></div>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <button class="mobile-menu" id="mobile-menu"><i class="fa-solid fa-bars"></i></button>
-    <a href="#" class="brand" id="brand-home"><span class="brand-icon"><i class="fa-solid fa-flask"></i></span><span><b>Innova</b><strong>Board</strong><small>INNOVANDO EL APRENDIZAJE</small></span></a>
-    <nav class="topnav" aria-label="Navegación principal">
-      <button class="nav-link active" data-view="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-      <button class="nav-link" data-view="explorar"><i class="fa-solid fa-compass"></i> Explorar</button>
-      <button class="nav-link" data-view="progreso"><i class="fa-solid fa-chart-simple"></i> Progreso</button>
-    </nav>
-    <div class="account-area">
-      <button class="profile-button" id="btn-open-profile" type="button"><span class="profile-avatar" id="nav-profile-avatar">B</span><span class="profile-name" id="nav-profile-name">Iniciar sesión</span><i class="fa-solid fa-chevron-down"></i></button>
+  <nav aria-label="Navegación principal">
+    <a href="#presentacion">Presentación</a>
+    <a href="#problema">Problema</a>
+    <a href="#hardware">Hardware</a>
+    <a href="#pruebas">Pruebas</a>
+    <a href="#plataforma">Plataforma</a>
+    <a href="#impacto">Impacto</a>
+  </nav>
+
+  <header>
+    <h1>InnovaBoard</h1>
+
+    <svg class="stroke" viewBox="0 0 420 24"
+         preserveAspectRatio="none" aria-hidden="true">
+      <path d="M4 16 C80 4 160 22 240 10 S380 8 416 14"/>
+    </svg>
+
+    <p class="lead">
+      Que la clase llegue en vivo a cada estudiante y no desaparezca
+      cuando se borra la pizarra.
+    </p>
+
+    <div class="img">
+      Imagen principal: foto del prototipo o de la pizarra con el plumón.
     </div>
-  </div>
-</header>
+  </header>
 
-<aside class="mobile-sidebar" id="mobile-sidebar">
-  <button class="mobile-side-link active" data-view="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-  <button class="mobile-side-link" data-view="explorar"><i class="fa-solid fa-compass"></i> Explorar ciencias</button>
-  <button class="mobile-side-link" data-view="progreso"><i class="fa-solid fa-chart-line"></i> Mi progreso</button>
-</aside>
+  <main>
 
-<main>
-<section class="view view-home" id="vista-inicio">
-  <div class="home-hero">
-    <div class="hero-copy">
-      <span class="eyebrow"><i class="fa-solid fa-leaf"></i> INNOVABOARD · CIENCIAS</span>
-      <h1>La ciencia no se memoriza.<br><em>Se descubre.</em></h1>
-      <p>Aprende con ideas claras, ejemplos visuales y pequeñas misiones que convierten cada tema en una experiencia.</p>
-      <div class="hero-actions"><button class="btn-primary" id="hero-explore"><i class="fa-solid fa-rocket"></i> Empezar a explorar</button><button class="btn-ghost" id="hero-progress"><i class="fa-solid fa-chart-line"></i> Ver mi progreso</button></div>
-      <div class="home-stats"><div><strong id="home-progress">0%</strong><span>avance total</span></div><div><strong id="home-completed">0</strong><span>lecciones completadas</span></div><div><strong>4</strong><span>áreas científicas</span></div></div>
-    </div>
-    <div class="hero-lab" aria-label="Ilustración de laboratorio">
-      <div class="lab-orbit orbit-a"></div><div class="lab-orbit orbit-b"></div><div class="lab-core"><i class="fa-solid fa-atom"></i></div>
-      <div class="hero-chip chip-bio"><i class="fa-solid fa-dna"></i><span>Vida</span></div>
-      <div class="hero-chip chip-chem"><i class="fa-solid fa-flask-vial"></i><span>Materia</span></div>
-      <div class="hero-chip chip-fis"><i class="fa-solid fa-bolt"></i><span>Energía</span></div>
-      <div class="hero-chip chip-earth"><i class="fa-solid fa-earth-americas"></i><span>Planeta</span></div>
-    </div>
-  </div>
+    <!--
+      PRESENTACIÓN — 7 espacios para imágenes.
+      Para poner una imagen, reemplaza el texto "[ IMAGEN N ]" de ese espacio por:
+      <img src="imagenes/1.jpg" alt="Descripción de la imagen">
+    -->
+    <section id="presentacion">
+      <h2>Presentación</h2>
 
-  <section class="characters-section">
-    <div class="section-heading compact"><div><span>CONOCE AL EQUIPO</span><h2>Tu laboratorio tiene compañía</h2></div><p>Cada personaje te guía en un área distinta.</p></div>
-    <div class="character-grid">
-      <article class="character-card char-bio"><div class="character"><div class="hair"></div><div class="face">🧑🏽‍🔬</div></div><div class="speech"><span>SOY BIO</span><h3>¡Vamos a descubrir la vida!</h3><p>Te acompaño en <b>Biología</b>: células, ecosistemas y cuerpo humano.</p><button class="character-go" data-materia="biologia">Ir a Biología <i class="fa-solid fa-arrow-right"></i></button></div></article>
-      <article class="character-card char-chem"><div class="character"><div class="face">👩🏻‍🔬</div></div><div class="speech"><span>SOY QUIMI</span><h3>¡Mezclemos ideas!</h3><p>Te ayudo con <b>Química</b>: materia, átomos y cambios.</p><button class="character-go" data-materia="quimica">Ir a Química <i class="fa-solid fa-arrow-right"></i></button></div></article>
-      <article class="character-card char-fis"><div class="character"><div class="face">🧑🏽‍🏫</div></div><div class="speech"><span>SOY FIS</span><h3>¡Todo tiene una explicación!</h3><p>Te acompaño en <b>Física</b>: movimiento, fuerzas y energía.</p><button class="character-go" data-materia="fisica">Ir a Física <i class="fa-solid fa-arrow-right"></i></button></div></article>
-      <article class="character-card char-earth"><div class="character"><div class="face">👩🏽‍🚀</div></div><div class="speech"><span>SOY TERRA</span><h3>¡Miremos nuestro planeta!</h3><p>Te ayudo con <b>Ciencias de la Tierra</b>: planeta, fenómenos y ambiente.</p><button class="character-go" data-materia="tierra">Ir a Tierra <i class="fa-solid fa-arrow-right"></i></button></div></article>
-    </div>
-  </section>
+      <p>
+        Fotografías del hardware, sensores y funcionamiento en tiempo
+        real de InnovaBoard.
+      </p>
 
-  <section class="quick-section"><div class="section-heading compact"><div><span>RUTA RÁPIDA</span><h2>¿Qué quieres hacer hoy?</h2></div></div><div class="quick-grid"><button class="quick-card" data-view="explorar"><i class="fa-solid fa-compass"></i><span><b>Elegir un tema</b><small>Explora las cuatro áreas</small></span><i class="fa-solid fa-arrow-right arrow"></i></button><button class="quick-card" id="quick-last"><i class="fa-solid fa-bookmark"></i><span><b>Continuar aprendiendo</b><small>Retoma tu última lección</small></span><i class="fa-solid fa-arrow-right arrow"></i></button><button class="quick-card" data-view="progreso"><i class="fa-solid fa-trophy"></i><span><b>Ver mi avance</b><small>Observa cuánto has descubierto</small></span><i class="fa-solid fa-arrow-right arrow"></i></button></div></section>
-</section>
+      <div class="galeria">
+        <div class="slot slot-1">[ IMAGEN 1 ]</div>
+        <div class="slot slot-2">[ IMAGEN 2 ]</div>
+        <div class="slot slot-3">[ IMAGEN 3 ]</div>
+        <div class="slot slot-4">[ IMAGEN 4 ]</div>
+        <div class="slot slot-5">[ IMAGEN 5 ]</div>
+        <div class="slot slot-6">[ IMAGEN 6 ]</div>
+        <div class="slot slot-7">[ IMAGEN 7 ]</div>
+      </div>
+    </section>
 
-<section class="view" id="vista-explorar" hidden>
-  <div class="page-head"><button class="back-link" id="explore-back"><i class="fa-solid fa-arrow-left"></i> Inicio</button><span class="eyebrow"><i class="fa-solid fa-microscope"></i> LABORATORIO DE CIENCIAS</span><h1>Elige un área para comenzar</h1><p>No tienes que aprender todo de una vez. Elige una ruta y avanza a tu ritmo.</p></div>
-  <div class="subject-grid">
-    <article class="subject-card biology" data-materia="biologia"><div class="subject-icon"><i class="fa-solid fa-dna"></i></div><div class="subject-copy"><span>01 · VIDA</span><h2>Biología</h2><p>Descubre cómo funciona la vida desde la célula hasta los ecosistemas.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="biologia">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="biologia">0%</div><div class="mini-track"><span></span></div></div></article>
-    <article class="subject-card chemistry" data-materia="quimica"><div class="subject-icon"><i class="fa-solid fa-flask-vial"></i></div><div class="subject-copy"><span>02 · MATERIA</span><h2>Química</h2><p>Entiende los materiales, los átomos y los cambios que ocurren a tu alrededor.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="quimica">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="quimica">0%</div><div class="mini-track"><span></span></div></div></article>
-    <article class="subject-card physics" data-materia="fisica"><div class="subject-icon"><i class="fa-solid fa-bolt"></i></div><div class="subject-copy"><span>03 · ENERGÍA</span><h2>Física</h2><p>Explica el movimiento, las fuerzas y la energía presentes en nuestro mundo.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="fisica">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="fisica">0%</div><div class="mini-track"><span></span></div></div></article>
-    <article class="subject-card earth" data-materia="tierra"><div class="subject-icon"><i class="fa-solid fa-earth-americas"></i></div><div class="subject-copy"><span>04 · PLANETA</span><h2>Ciencias de la Tierra</h2><p>Conoce nuestro planeta, sus fenómenos y cómo podemos cuidarlo.</p></div><div class="subject-bottom"><span>3 lecciones</span><button class="subject-open" data-materia="tierra">Explorar <i class="fa-solid fa-arrow-right"></i></button></div><div class="subject-progress"><div data-progress-tag="tierra">0%</div><div class="mini-track"><span></span></div></div></article>
-  </div>
-</section>
+    <section id="problema">
+      <h2>El problema</h2>
 
-<section class="view" id="vista-lecciones" hidden>
-  <button class="back-link" id="btn-volver-materias"><i class="fa-solid fa-arrow-left"></i> Volver a áreas</button>
-  <div class="lesson-list-head"><div class="active-subject-icon" id="materia-activa-icono"></div><div><span class="eyebrow">RUTA DE APRENDIZAJE</span><h1 id="materia-activa-nombre">Biología</h1><p id="materia-activa-desc"></p></div></div>
-  <div class="area-guide" id="area-guide">
-    <div class="guide-character" id="area-guide-character">🧑🏽‍🔬</div>
-    <div class="guide-bubble">
-      <span class="guide-name" id="area-guide-name">BIO</span>
-      <h2 id="area-guide-title">¡Bienvenido a tu laboratorio!</h2>
-      <p id="area-guide-message">Aquí encontrarás tus lecciones. Elige una para comenzar a descubrir.</p>
-    </div>
-  </div>
-  <div class="area-progress"><div><span>Progreso del área</span><b id="progreso-materia-porcentaje">0%</b></div><div class="area-track"><span id="progreso-materia-fill"></span></div></div>
-  <div class="lesson-grid" id="lecciones-lista"></div>
-</section>
+      <p>
+        No todos copiamos al mismo ritmo. Cuando el docente borra
+        la pizarra, parte de la explicación se pierde.
+      </p>
 
-<section class="view" id="vista-contenido" hidden>
-  <button class="back-link" id="btn-volver-lecciones"><i class="fa-solid fa-arrow-left"></i> Volver a las lecciones</button>
-  <div class="reading-line"><span id="lectura-progreso-fill"></span></div>
-  <article class="lesson-content" id="contenido-leccion"></article>
-</section>
+      <p>
+        Nuestra idea: el docente sigue usando su pizarra de siempre,
+        y la clase se guarda y se ve en la pantalla de cada estudiante.
+      </p>
 
-<section class="view" id="vista-progreso-global" hidden>
-  <div class="page-head"><span class="eyebrow"><i class="fa-solid fa-chart-line"></i> MI PROGRESO</span><h1>Todo lo que ya descubriste</h1><p>Tu avance se guarda en este navegador para que puedas volver cuando quieras.</p></div>
-  <div class="global-progress-card"><div class="global-number"><strong id="resumen-porcentaje">0%</strong><span id="resumen-detalle">0 de 12 lecciones</span></div><div class="global-bar"><span id="progreso-global-fill"></span></div></div>
-  <div class="progress-subjects" id="progreso-global-materias"></div>
-  <button class="reset-progress" id="btn-reset-progreso"><i class="fa-solid fa-rotate-left"></i> Reiniciar progreso</button>
-</section>
-</main>
+      <div class="img">
+        Imagen: estudiantes copiando de la pizarra.
+      </div>
+    </section>
 
-<!-- LOGIN -->
-<div class="account-modal" id="login-modal" aria-hidden="true"><div class="account-backdrop" data-close-account></div><div class="account-card"><button class="account-close" data-close-account><i class="fa-solid fa-xmark"></i></button><div class="account-symbol"><i class="fa-solid fa-flask"></i></div><span class="eyebrow">INNOVABOARD</span><h2>Entra a tu laboratorio</h2><p>Guarda tu progreso y vuelve a tus lecciones cuando quieras.</p><form id="login-form"><label>Nombre<input id="login-name" required placeholder="Ej. Bryan"></label><label>Correo electrónico<input id="login-email" type="email" required placeholder="tucorreo@ejemplo.com"></label><label>Grupo <span class="optional">opcional</span><input id="login-group" placeholder="Ej. BTV Desarrollo de Software"></label><button class="btn-primary full" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button></form><small class="local-note"><i class="fa-solid fa-lock"></i> Esta versión guarda el perfil solo en este navegador.</small></div></div>
+    <section id="hardware">
+      <h2>Cómo funciona</h2>
 
-<!-- PERFIL -->
-<div class="account-modal" id="profile-modal" aria-hidden="true"><div class="account-backdrop" data-close-account></div><div class="account-card"><button class="account-close" data-close-account><i class="fa-solid fa-xmark"></i></button><div class="profile-head"><div class="profile-big-avatar" id="profile-big-avatar">B</div><div><span class="eyebrow">MI PERFIL</span><h2 id="profile-title">Tu espacio</h2><p id="profile-welcome"></p></div></div><div class="profile-grid"><div><span>Nombre</span><b id="profile-name">—</b></div><div><span>Correo</span><b id="profile-email">—</b></div><div><span>Grupo</span><b id="profile-group">—</b></div><div><span>Lecciones</span><b id="profile-lessons">0</b></div></div><div class="profile-actions"><button class="btn-primary" id="profile-close-btn">Seguir aprendiendo</button><button class="btn-danger" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button></div></div></div>
+      <p>
+        Un plumón con emisor ultrasónico y cuatro receptores
+        alrededor de la pizarra.
+      </p>
 
-<div class="toast-container" id="toast-container"></div>
-<script src="aprender.js"></script>
-</body></html>
+      <div class="flow">
+        <span>Plumón (40 kHz)</span>
+        <i>›</i>
+        <span>4 receptores</span>
+        <i>›</i>
+        <span>ESP32</span>
+        <i>›</i>
+        <span>Computadora</span>
+        <i>›</i>
+        <span>Pantallas de la clase</span>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Plumón</h3>
+          <p>Emite ultrasonido mientras se escribe.</p>
+        </article>
+
+        <article class="card">
+          <h3>Receptores</h3>
+          <p>Cuatro sensores captan la señal desde distintos puntos.</p>
+        </article>
+
+        <article class="card">
+          <h3>ESP32</h3>
+          <p>Envía los datos por USB serial al servidor.</p>
+        </article>
+      </div>
+
+      <div class="img">
+        Imagen: plumón, receptores y placa del prototipo.
+      </div>
+    </section>
+
+    <section id="pruebas">
+      <h2>Cómo lo construimos</h2>
+
+      <p>
+        Fuimos por etapas: un emisor con un receptor, luego los
+        cuatro canales y, por último, la conexión con la plataforma.
+        También diseñamos una placa y una carcasa.
+      </p>
+
+      <article class="card todo">
+        <h3>Lo que aprendimos</h3>
+        <p>
+          Detectar la señal no es lo mismo que ubicar bien el trazo.
+          Al inclinar el plumón o tapar la señal con la mano,
+          la detección cambia.
+        </p>
+      </article>
+
+      <div class="img">
+        Imagen: proceso de pruebas, placa o carcasa.
+      </div>
+    </section>
+
+    <section id="plataforma">
+      <h2>La plataforma</h2>
+
+      <p>
+        La plataforma permite crear una clase, verla en vivo en cada
+        pantalla y guardarla para repasar después.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Docente</h3>
+          <p>Crea una clase y abre la pizarra digital.</p>
+        </article>
+
+        <article class="card">
+          <h3>Estudiante</h3>
+          <p>Ve lo que se escribe mientras la clase está en marcha.</p>
+        </article>
+
+        <article class="card">
+          <h3>Clases guardadas</h3>
+          <p>El contenido queda disponible para repasar.</p>
+        </article>
+      </div>
+
+      <div class="img">
+        Imagen: captura de la vista del docente.
+      </div>
+
+      <div class="img">
+        Imagen: captura de la vista del estudiante.
+      </div>
+
+      <p> Tecnologías previstas: Node.js, Socket.IO y SQLite.</p>
+    </section>
+
+    <section id="impacto">
+      <h2>Impacto y viabilidad</h2>
+
+      <div class="grid">
+        <article class="card ok">
+          <h3>Usa la pizarra de la escuela</h3>
+          <p>No hay que comprar una pizarra nueva.</p>
+        </article>
+
+        <article class="card">
+          <h3>Qué se necesita</h3>
+          <p>
+            Dispositivo de captura, una computadora, energía
+            y una red local.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Cómo medir si ayuda</h3>
+          <p>
+            Probarlo en clases reales: contenido conservado,
+            tiempo copiando y facilidad para el docente.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Instituto Nacional de San Miguel Tepezontes · Proyecto InnovaBoard
+  </footer>
+
+  <button id="auto" type="button"
+          aria-pressed="false">
+    Activar desplazamiento
+  </button>
+
+  <script>
+    (() => {
+      "use strict";
+
+      function init() {
+        const button = document.getElementById("auto");
+
+        if (!button) return;
+
+        let timer = null;
+        let busy = false;
+
+        function stop() {
+          if (timer !== null) {
+            clearInterval(timer);
+            timer = null;
+          }
+
+          busy = false;
+          button.textContent = "Activar desplazamiento";
+          button.setAttribute("aria-pressed", "false");
+        }
+
+        function step() {
+          const maxScroll =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+          if (window.scrollY >= maxScroll - 5) {
+            stop();
+            return;
+          }
+
+          if (busy) return;
+
+          busy = true;
+
+          window.scrollBy({
+            top: 250,
+            behavior: "smooth"
+          });
+
+          setTimeout(() => {
+            busy = false;
+          }, 800);
+        }
+
+        function start() {
+          if (timer !== null) return;
+
+          button.textContent = "Pausar desplazamiento";
+          button.setAttribute("aria-pressed", "true");
+
+          timer = setInterval(step, 3000);
+        }
+
+        button.addEventListener("click", () => {
+          if (timer !== null) {
+            stop();
+          } else {
+            start();
+          }
+        });
+
+        ["wheel", "touchstart", "keydown"].forEach(eventName => {
+          window.addEventListener(eventName, event => {
+            if (eventName === "keydown" &&
+                !["ArrowDown", "ArrowUp", "PageDown",
+                  "PageUp", "Home", "End", " "].includes(event.key)) {
+              return;
+            }
+
+            stop();
+          }, { passive: true });
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+</body>
+</html>
